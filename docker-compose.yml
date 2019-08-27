@@ -1,0 +1,27 @@
+version: '3.5'
+
+services:
+  master:
+    build:
+      context: ./docker/master
+    image: mysql:8
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: master
+      MYSQL_USER: master
+      MYSQL_PASSWORD: master
+    volumes:
+      - mysqldata:/var/lib/mysql
+    networks:
+      - mysql_replication
+
+volumes:
+  mysqldata:
+    driver: local
+
+networks:
+  mysql_replication:
+    driver: bridge
+    name: mysql_replication
